@@ -19,7 +19,7 @@
 
         <button onclick="changeContent()">Change content</button>
     </div>
-    <script src="./index.js"></script>
+    <script src="./vue.js"></script>
 
     <script>
         let options = {
@@ -27,7 +27,6 @@
             selectorTwo: 'Current age'
         }
         let currentDom = new Vue(options)
-        currentDom.created()
         function changeContent() {
             let name = document.querySelector('#currentName').value
             let age = document.querySelector('#currentAge').value

@@ -6,17 +6,19 @@ class Vue {
         this.options = options
         
         this.setDoms()
+
+        // initialization
+        this.render()
     }
 
     setDoms() {
         this.rootDoms = {}
         this.selectors.forEach(e => {
-            const dom = document.querySelectorAll(`[${e}]`)
-            this.rootDoms[e] = dom
+            this.rootDoms[e] = document.querySelectorAll(`[${e}]`)
         })
     }
 
-    created() {
+    render() {
         this.selectors.forEach(e => {
             this.updateDom(e, this.options[e])
         })
