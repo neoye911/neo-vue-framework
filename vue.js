@@ -5,7 +5,7 @@ class Vue {
         this.selectors = Object.keys(options.data)
         this.data = options.data
         
-        this.createMethod(options.methods)
+        this.setMethods(options.methods)
         console.log('this', this)
         this.setDoms()
 
@@ -13,7 +13,7 @@ class Vue {
         this.render()
     }
 
-    createMethod(methods) {
+    setMethods(methods) {
         if (Object.keys(methods).length > 0) {
             Object.keys(methods).forEach(e => {
                 this[e] = methods[e]
