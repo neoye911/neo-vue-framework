@@ -4,17 +4,22 @@ class Vue {
     constructor(options) {
         this.selectors = Object.keys(options.data)
         this.data = options.data
-        if (Object.keys(options.methods).length > 0) {
-            Object.keys(options.methods).forEach(e => {
-                this[e] = options.methods[e]
-                this.bindMethod(e)
-            })
-        }
+        
+        this.createMethod(options.methods)
         console.log('this', this)
         this.setDoms()
 
         // initialization
         this.render()
+    }
+
+    createMethod(methods) {
+        if (Object.keys(methods).length > 0) {
+            Object.keys(methods).forEach(e => {
+                this[e] = methods[e]
+                this.bindMethod(e)
+            })
+        }
     }
 
     bindMethod(methodKey) {
@@ -37,8 +42,10 @@ class Vue {
         })
     }
 
-    update(key, value) {
-        this.updateDom(key, value)
+    // single direction bind
+    update(key) {
+        const node = document.querySelector('#'+key)
+        this.updateDom(node.getAttribute('v-bind'), node.value)
     }
 
     updateDom(key, value) {
