@@ -2,13 +2,26 @@
 class Vue {
 
     constructor(options) {
-        this.selectors = Object.keys(options)
-        this.options = options
-        
+        this.selectors = Object.keys(options.data)
+        this.data = options.data
+        if (Object.keys(options.methods).length > 0) {
+            Object.keys(options.methods).forEach(e => {
+                this[e] = options.methods[e]
+                this.bindMethod(e)
+            })
+        }
+        console.log('this', this)
         this.setDoms()
 
         // initialization
         this.render()
+    }
+
+    bindMethod(methodKey) {
+        let bindNodes = document.querySelectorAll(`[click='${methodKey}']`) || []
+        bindNodes.forEach(e => {
+            e.addEventListener('click', this[methodKey].bind(this))
+        })
     }
 
     setDoms() {
@@ -20,7 +33,7 @@ class Vue {
 
     render() {
         this.selectors.forEach(e => {
-            this.updateDom(e, this.options[e])
+            this.updateDom(e, this.data[e])
         })
     }
 

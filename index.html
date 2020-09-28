@@ -9,15 +9,15 @@
   </head>
   <body>
     <div id="app">
-        <div selectorOne></div>
-        <div selectorOne></div>
-        <div selectorTwo></div>
+        <span>selectorOne: </span><span selectorOne></span><br/>
+        <span>selectorOne: </span><span selectorOne></span><br/>
+        <span>selectorTwo: </span><span selectorTwo></span><br/>
         <label for="currentName">Change name to:</label>
         <input type="text" id="currentName" name="currentName" value=""><br>
         <label for="currentAge">Change age to:</label>
         <input type="text" id="currentAge" name="currentAge" value=""><br>
 
-        <button onclick="changeContent()">Change content</button>
+        <button click="changeContent">Change content</button>
     </div>
     <script src="./vue.js"></script>
 
@@ -26,13 +26,16 @@
             selectorOne: 'Current name',
             selectorTwo: 'Current age'
         }
-        let currentDom = new Vue(options)
-        function changeContent() {
-            let name = document.querySelector('#currentName').value
-            let age = document.querySelector('#currentAge').value
-            currentDom.update('selectorOne', name)
-            currentDom.update('selectorTwo', age)
-        }
+        let currentDom = new Vue({
+            data: options,
+            methods: {
+                changeContent: function () {
+                    this.update('selectorOne', document.querySelector('#currentName').value)
+                    this.update('selectorTwo', document.querySelector('#currentAge').value)
+                }
+            }
+        })
+        
     </script>
   </body>
 </html>
