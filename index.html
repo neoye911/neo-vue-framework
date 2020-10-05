@@ -32,6 +32,11 @@
                     this.selectorOne = document.querySelector('#currentName').value
                     this.selectorTwo = document.querySelector('#currentAge').value
                 }
+            },
+            watch: {
+                selectorOne: function(newVal) {
+                    console.log('selectorOne new value is', newVal)
+                }
             }
         })
         

@@ -6,6 +6,7 @@ class Vue {
         this.data = options.data
         
         this.setMethods(options.methods)
+        this.setWatch(options.watch)
         console.log('this', this)
         this.setDoms()
 
@@ -19,6 +20,20 @@ class Vue {
                 this[e] = methods[e]
                 this.bindMethod(e)
             })
+        }
+    }
+
+    setWatch(methods) {
+        if (Object.keys(methods).length > 0) {
+            Object.keys(methods).forEach(e => {
+                this['w'+e] = methods[e]
+            })
+        }
+    }
+
+    runWatch(key, newVal, oldVal) {
+        if (typeof this['w'+key] === "function") {
+            this['w'+key](newVal, oldVal)
         }
     }
 
@@ -57,11 +72,13 @@ class Vue {
                 return this.data[key]
             },
             set: function(newVal) {
-                if (this.data[key] === newVal) {
+                var oldVal = this.data[key]
+                if (oldVal === newVal) {
                     return console.log('NO value changed', newVal)
                 }
-                console.log('Setter', key, this.data[key], newVal)
+                console.log('Setter', key, oldVal, newVal)
                 this.data[key] = newVal
+                this.runWatch(key, newVal, oldVal)
                 this.updateDom(key, newVal)
             }
         })
