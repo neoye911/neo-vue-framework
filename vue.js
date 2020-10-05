@@ -13,6 +13,7 @@ class Vue {
 
         // initialization
         this.render()
+        this.setComputed(options.computed)
     }
 
     setMethods(methods) {
@@ -24,10 +25,10 @@ class Vue {
         }
     }
 
-    setWatch(methods) {
-        if (Object.keys(methods).length > 0) {
-            Object.keys(methods).forEach(e => {
-                this['w'+e] = methods[e]
+    setWatch(watches) {
+        if (Object.keys(watches).length > 0) {
+            Object.keys(watches).forEach(e => {
+                this['w'+e] = watches[e]
             })
         }
     }
@@ -37,6 +38,14 @@ class Vue {
             this['w'+key](newVal, oldVal)
         }
     }
+
+    setComputed(computed) {
+        if (Object.keys(computed).length > 0) {
+            Object.keys(computed).forEach(e => {
+                this[e] = this.defineComputed(e, computed[e])
+            })
+        }
+    } 
 
     bindMethod(methodKey) {
         let bindNodes = this.rootNode.querySelectorAll(`[click='${methodKey}']`) || []
@@ -60,9 +69,20 @@ class Vue {
     }
 
     updateDom(key, value) {
-        console.log('selector, text', key, value)
         this.rootDoms[key].forEach(e => {
             e.innerHTML = value
+        })
+    }
+    
+    defineComputed(key, fn) {
+        Object.defineProperty(this, key, {
+            get: function() {
+                console.log('current computed getter is', key)
+                return fn.call(this)
+            },
+            set: function(newVal) {
+                console.log('current computed setter is', newVal)
+            }
         })
     }
 

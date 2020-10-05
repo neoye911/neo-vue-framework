@@ -32,11 +32,18 @@
                 changeContent: function () {
                     this.selectorOne = document.querySelector('#currentName').value
                     this.selectorTwo = document.querySelector('#currentAge').value
+                    console.log('computed one', this.computedOne)
                 }
             },
             watch: {
                 selectorOne: function(newVal) {
                     console.log('selectorOne new value is', newVal)
+                }
+            },
+            computed:{
+                computedOne: function() {
+                    console.log('windiow this', this)
+                    return this.selectorOne + "and" + this.selectorTwo;
                 }
             }
         })
