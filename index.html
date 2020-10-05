@@ -13,9 +13,9 @@
         <span>selectorOne: </span><span selectorOne></span><br/>
         <span>selectorTwo: </span><span selectorTwo></span><br/>
         <label for="currentName">Change name to:</label>
-        <input type="text" id="currentName" name="currentName" v-bind="selectorOne"><br>
+        <input type="text" id="currentName" name="currentName"><br>
         <label for="currentAge">Change age to:</label>
-        <input type="text" id="currentAge" name="currentAge" v-bind="selectorTwo"><br>
+        <input type="text" id="currentAge" name="currentAge"><br>
 
         <button click="changeContent">Change content</button>
     </div>
@@ -29,8 +29,8 @@
             },
             methods: {
                 changeContent: function () {
-                    this.update('currentName')
-                    this.update('currentAge')
+                    this.selectorOne = document.querySelector('#currentName').value
+                    this.selectorTwo = document.querySelector('#currentAge').value
                 }
             }
         })

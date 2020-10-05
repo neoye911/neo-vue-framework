@@ -43,12 +43,6 @@ class Vue {
         })
     }
 
-    // single direction bind
-    update(key) {
-        const node = document.querySelector('#'+key)
-        this.updateDom(node.getAttribute('v-bind'), node.value)
-    }
-
     updateDom(key, value) {
         console.log('selector, text', key, value)
         this.rootDoms[key].forEach(e => {
@@ -62,9 +56,13 @@ class Vue {
                 console.log('Getter', key, this.data[key])
                 return this.data[key]
             },
-            setter: function(newVal) {
+            set: function(newVal) {
+                if (this.data[key] === newVal) {
+                    return console.log('NO value changed', newVal)
+                }
                 console.log('Setter', key, this.data[key], newVal)
-                return this.data[key] = newVal
+                this.data[key] = newVal
+                this.updateDom(key, newVal)
             }
         })
     }
