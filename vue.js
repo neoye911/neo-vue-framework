@@ -2,6 +2,7 @@
 class Vue {
 
     constructor(options) {
+        this.rootNode = document.querySelector('#app') || document
         this.selectors = Object.keys(options.data)
         this.data = options.data
         
@@ -38,7 +39,7 @@ class Vue {
     }
 
     bindMethod(methodKey) {
-        let bindNodes = document.querySelectorAll(`[click='${methodKey}']`) || []
+        let bindNodes = this.rootNode.querySelectorAll(`[click='${methodKey}']`) || []
         bindNodes.forEach(e => {
             e.addEventListener('click', this[methodKey].bind(this))
         })
@@ -47,7 +48,7 @@ class Vue {
     setDoms() {
         this.rootDoms = {}
         this.selectors.forEach(e => {
-            this.rootDoms[e] = document.querySelectorAll(`[${e}]`)
+            this.rootDoms[e] = this.rootNode.querySelectorAll(`[${e}]`)
         })
     }
 
