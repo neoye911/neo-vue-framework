@@ -14,6 +14,9 @@ class Vue {
         // initialization
         this.render()
         this.setComputed(options.computed)
+        if (options.mounted) {
+            options.mounted.call(this)
+        }
     }
 
     setMethods(methods) {

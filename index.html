@@ -40,12 +40,17 @@
                     console.log('selectorOne new value is', newVal)
                 }
             },
-            computed:{
+            computed: {
                 computedOne: function() {
                     console.log('windiow this', this)
                     return this.selectorOne + "and" + this.selectorTwo;
                 }
-            }
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.selectorOne = "I'm test case of mounted hook";
+                }, 1500);
+            },
         })
         
     </script>
