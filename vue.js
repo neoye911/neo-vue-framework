@@ -10,6 +10,9 @@ class Vue {
         this.setWatch(options.watch)
         console.log('this', this)
         this.setDoms()
+        if (options.created) {
+            options.created.call(this)
+        }
 
         // initialization
         this.render()
