@@ -38,6 +38,7 @@ class Vue {
 
     render() {
         this.selectors.forEach(e => {
+            this.proxyData(e)
             this.updateDom(e, this.data[e])
         })
     }
@@ -52,6 +53,19 @@ class Vue {
         console.log('selector, text', key, value)
         this.rootDoms[key].forEach(e => {
             e.innerHTML = value
+        })
+    }
+
+    proxyData(key) {
+        Object.defineProperty(this, key, {
+            get: function() {
+                console.log('Getter', key, this.data[key])
+                return this.data[key]
+            },
+            setter: function(newVal) {
+                console.log('Setter', key, this.data[key], newVal)
+                return this.data[key] = newVal
+            }
         })
     }
 }
